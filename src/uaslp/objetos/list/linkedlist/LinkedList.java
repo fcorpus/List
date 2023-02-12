@@ -13,6 +13,7 @@ public class LinkedList {
             tail = node;
         }else{
             tail.next = node;
+            node.previous=tail;
         }
         tail = node;
         size++;
@@ -26,6 +27,7 @@ public class LinkedList {
             tail = node;
         }else{
             head.previous = node;
+            node.next=head;
         }
         head = node;
         size++;
@@ -35,7 +37,6 @@ public class LinkedList {
         for(int currentIndex = 0; currentIndex < index; currentIndex++){
             currentNode=currentNode.next;
         }
-        currentNode= null;
         size--;
     }
     public void removeAll(){
