@@ -1,6 +1,9 @@
 package uaslp.objetos.list.linkedlist;
 
-public class LinkedList {
+import uaslp.objetos.list.Iterator;
+import uaslp.objetos.list.List;
+
+public class LinkedList implements List {
     private Node head;
     private Node tail;
     private int size;
@@ -40,8 +43,9 @@ public class LinkedList {
         size--;
     }
     public void removeAll(){
-        for(Node currentNode = tail ; currentNode != null; currentNode = currentNode.previous){
-            currentNode=null;
+        Iterator iterator = getIterator();
+        while(iterator.hasNext()){
+            iterator.Next();
             size--;
         }
     }
@@ -81,7 +85,7 @@ public class LinkedList {
     public int getSize() {
         return size;
     }
-    public LinkedListIterator getIterator(){
+    public Iterator getIterator(){
         return new LinkedListIterator(head);
     }
 }

@@ -1,6 +1,9 @@
 package uaslp.objetos.list.arraylist;
 
-public class ArrayList {
+import uaslp.objetos.list.Iterator;
+import uaslp.objetos.list.List;
+
+public class ArrayList implements List {
     private static final int INITIAL_SIZE = 2;
     private String []array;
     private int size;
@@ -17,6 +20,9 @@ public class ArrayList {
     public void  addAtFront(String data){
         if(size==array.length){
             increaseSize();
+        }
+        for(int i=size-1;i>=0;i--){
+            array[i+1]=array[i];
         }
         array[0]= data;
         size++;
@@ -67,4 +73,5 @@ public class ArrayList {
         }
         array = newArray;
     }
+    public Iterator getIterator(){return  new ArrayListIterator(this);}
 }
