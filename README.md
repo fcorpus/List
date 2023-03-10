@@ -1,4 +1,4 @@
-# Tare5-List
+# List
 Parcial 1 Tarea 5 
 @startuml
 
