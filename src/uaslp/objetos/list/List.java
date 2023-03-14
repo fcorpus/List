@@ -1,13 +1,13 @@
 package uaslp.objetos.list;
 
-public interface List {
-    void  addAtTail(String data);
-    void  addAtFront(String data);
+public interface List<G> {
+    void  addAtTail(G data);
+    void  addAtFront(G data);
     void remove(int index);
     void removeAll();
-    void setAt(int index, String data);
-    String getAt(int index);
-    void removeAllWithValue(String data);
+    void setAt(int index, G data);
+    G getAt(int index);
+    void removeAllWithValue(G data);
     int getSize();
-    Iterator getIterator();
+    Iterator<G> getIterator();
 }
