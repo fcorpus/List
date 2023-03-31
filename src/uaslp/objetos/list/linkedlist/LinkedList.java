@@ -2,15 +2,20 @@ package uaslp.objetos.list.linkedlist;
 
 import uaslp.objetos.list.Iterator;
 import uaslp.objetos.list.List;
+import uaslp.objetos.list.exceptions.BadIndexException;
+import uaslp.objetos.list.exceptions.NotNullAllowedException;
 
 public class LinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private int size=0;
-    public void addAtTail(T data) {
+    public void addAtTail(T data) throws NotNullAllowedException {
         Node<T> node =new Node<>();
         node.data = data;
         node.previous = tail;
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         if(head == null){
             head = node;
             tail = node;
@@ -21,10 +26,13 @@ public class LinkedList<T> implements List<T> {
         tail = node;
         size++;
     }
-    public void addAtFront(T data){
+    public void addAtFront(T data) throws NotNullAllowedException{
         Node<T> node = new Node<>();
         node.data =data;
         node.next = head;
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         if(head == null){
             head = node;
             tail = node;
@@ -35,8 +43,11 @@ public class LinkedList<T> implements List<T> {
         head = node;
         size++;
     }
-    public void remove(int index){
+    public void remove(int index)throws BadIndexException {
         Node<T> currentNode = head;
+        if(index<0 || index>size){
+            throw new BadIndexException();
+        }
         for(int currentIndex = 0; currentIndex < index; currentIndex++){
             currentNode=currentNode.next;
         }
@@ -49,16 +60,22 @@ public class LinkedList<T> implements List<T> {
             size--;
         }
     }
-    public void setAt(int index, T data){
+    public void setAt(int index, T data) throws BadIndexException, NotNullAllowedException{
         Node<T> currentNode = head;
         Iterator<T> iterator= null;
+        if(index<0 || index>size){
+            throw new BadIndexException();
+        }
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         do{
             currentNode=currentNode.next;
         }while(iterator.Next()!=data);
     }
-    public T getAt(int index){
+    public T getAt(int index) throws BadIndexException{
         if(index < 0 || index >= size){
-            return null;
+            throw new BadIndexException();
         }
         Node<T> currentNode = head;
         for(int currentIndex = 0 ; currentIndex < index; currentIndex++){

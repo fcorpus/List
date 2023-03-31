@@ -2,6 +2,8 @@ package uaslp.objetos.list.arraylist;
 
 import uaslp.objetos.list.Iterator;
 import uaslp.objetos.list.List;
+import uaslp.objetos.list.exceptions.BadIndexException;
+import uaslp.objetos.list.exceptions.NotNullAllowedException;
 
 public class ArrayList<T> implements List<T> {
     private static final int INITIAL_SIZE = 2;
@@ -11,14 +13,20 @@ public class ArrayList<T> implements List<T> {
     public ArrayList(){
         array = (T[])(new Object[INITIAL_SIZE]);
     }
-    public void  addAtTail(T data){
+    public void  addAtTail(T data) throws NotNullAllowedException {
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         if(size==array.length){
             increaseSize();
         }
         array[size] = data;
         size++;
     }
-    public void  addAtFront(T data){
+    public void  addAtFront(T data) throws NotNullAllowedException{
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         if(size==array.length){
             increaseSize();
         }
@@ -28,7 +36,10 @@ public class ArrayList<T> implements List<T> {
         array[0]= data;
         size++;
     }
-    public void remove(int index) {
+    public void remove(int index) throws BadIndexException {
+        if(index>size || index<0){
+            throw new BadIndexException();
+        }
         if(index<size) {
             array[index] = array[index + 1];
             array[index + 1] = null;
@@ -46,21 +57,28 @@ public class ArrayList<T> implements List<T> {
         }
         size=0;
     }
-    public void setAt(int index, T data){
+    public void setAt(int index, T data) throws BadIndexException, NotNullAllowedException{
+        if(index<0 || index > size){
+            throw new BadIndexException();
+        }
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
         array[index]=data;
     }
-    public T getAt(int index){
+    public T getAt(int index) throws BadIndexException{
         if(index < 0 || index >= size){
-            return null;
+            throw new BadIndexException();
         }
         return (T)array[index];
     }
     public void removeAllWithValue(T data){
-        int auxiliarySize=size;
-        for(int i=0;i<auxiliarySize;i++){
+        for(int i=size;i>=0;i--){
             if(array[i].equals(data)) {
-                array[i] = array[i+1];
-                size--;
+                try {
+                    remove(i);
+                }catch(BadIndexException ignored){
+                }
             }
         }
     }
