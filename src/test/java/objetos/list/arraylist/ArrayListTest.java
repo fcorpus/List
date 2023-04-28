@@ -1,4 +1,6 @@
 package objetos.list.arraylist;
+
+import objetos.list.Iterator;
 import objetos.list.exceptions.BadIndexException;
 import objetos.list.exceptions.NotNullAllowedException;
 import org.junit.jupiter.api.Assertions;
@@ -200,22 +202,69 @@ public class ArrayListTest {
         Assertions.assertFalse(list.isEmpty());
     }
     @Test
-    public void whenListIsCreated_addingElementsAndRemovingSpecificValuesButTryingExceptions() throws NotNullAllowedException, BadIndexException{
-      //initialization
-      ArrayList<String> list = new ArrayList<>();
-      list.addAtFront("4");
-      list.addAtFront("3");
-      //execution
-        Assertions.assertThrows(BadIndexException.class,() -> list.removeAllWithValue("2"));
-      Assertions.assertFalse(list.isEmpty());
-    }
-    @Test
-    public void getIteratorToSeeIfItIsWorkingCorrectly() throws BadIndexException,NotNullAllowedException{
+    public void whenListIsCreated_SettingElementsAndExceptionComeUp() throws BadIndexException{
         //initialization
         ArrayList<String> list = new ArrayList<>();
-        list.addAtFront("1");
-        list.addAtFront("0");
-        //Execution
-        Assertions.assertEquals(list.getIterator(),2);
+        //execution
+        Assertions.assertThrows(BadIndexException.class,() -> list.setAt(1,"5"));
+        //validation
+        Assertions.assertTrue(list.isEmpty());
+    }
+    @Test
+    public void whenListCreated_addAtTailTryingException() throws NotNullAllowedException{
+        //initialization
+        ArrayList<String> list = new ArrayList<>();
+        //execution
+        Assertions.assertThrows(NotNullAllowedException.class,() -> list.addAtTail(null));
+        //validation
+        Assertions.assertTrue(list.isEmpty());
+    }
+    @Test
+    public void whenListCreated_increaseSizeByAddingAtTail() throws NotNullAllowedException{
+        //initialization
+        ArrayList<String> list = new ArrayList<>();
+        //execution
+        list.addAtTail("2");
+        list.addAtTail("2");
+        list.addAtTail("2");
+        //validation
+        Assertions.assertEquals(3,list.getSize());
+    }
+    @Test
+    public void whenListCreated_setAtTryingException() throws BadIndexException,NotNullAllowedException{
+        //initialization
+        ArrayList<String> list = new ArrayList<>();
+        list.addAtTail("2");
+        list.addAtTail("2");
+        //execution
+        Assertions.assertThrows(NotNullAllowedException.class,() -> list.setAt(1,null));
+    }
+    @Test
+    public void whenListCreated_getAtTryingException() throws BadIndexException, NotNullAllowedException {
+        //initialization
+        ArrayList<String> list = new ArrayList<>();
+        list.addAtTail("2");
+        list.addAtTail("2");
+        list.addAtTail("2");
+        //execution
+        Assertions.assertThrows(BadIndexException.class,() -> list.getAt(3));
+        //validation
+        Assertions.assertEquals(3,list.getSize());
+    }
+    @Test
+    public void tryingIterator() throws NotNullAllowedException{
+        //initialization
+        ArrayList<String> list = new ArrayList<>();
+        list.addAtTail("2");
+        list.addAtTail("2");
+        list.addAtTail("2");
+        list.addAtTail("2");
+        //execution
+        Iterator<String> iterator = list.getIterator();
+        while (iterator.hasNext()) {
+            iterator.Next();
+        }
+        //validation
+        Assertions.assertEquals(null,iterator.Next());
     }
 }

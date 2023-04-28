@@ -42,13 +42,7 @@ public class ArrayList<T> implements List<T> {
         }
         if(index<size) {
             array[index] = array[index + 1];
-            array[index + 1] = null;
             size--;
-        }else{
-            if(index==size) {
-                array[index]=null;
-                size--;
-            }
         }
     }
     public void removeAll(){
@@ -72,8 +66,11 @@ public class ArrayList<T> implements List<T> {
         }
         return (T)array[index];
     }
-    public void removeAllWithValue(T data){
-        for(int i=size;i>=0;i--){
+    public void removeAllWithValue(T data)throws NotNullAllowedException{
+        if(data==null){
+            throw new NotNullAllowedException();
+        }
+        for(int i=size-1;i>=0;i--){
             if(array[i].equals(data)) {
                 try {
                     remove(i);
